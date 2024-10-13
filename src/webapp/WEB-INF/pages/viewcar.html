@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+    </head>
+    <body>
+        <h2>Список машин по запросу</h2>
+        <table>
+            <thead>
+                <tr>
+                <th>Id</th>
+                <th>Марка</th>
+                <th>Пробег км.</th>
+                </tr>
+            </thead>
+        <tbody>
+            <tr th:each="car : ${list}">
+                <td th:text="${car.id}">Id</td>
+                <td th:text="${car.model}">Марка</td>
+                <td th:text="${car.mileage}">Пробег</td>
+            </tr>
+        </tbody>
+        </table>
+    </body>
+</html>
