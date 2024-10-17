@@ -1,14 +1,19 @@
 package web.controller;
 
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.DataBinder;
 import org.springframework.validation.Errors;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import spring.model.User;
 import spring.service.UserService;
 
-import javax.validation.Valid;
+
 import java.util.List;
 
 @Controller
@@ -16,9 +21,18 @@ import java.util.List;
 public class UserController {
 
     private UserService userService;
+    @Autowired
+    private LocalValidatorFactoryBean validator;
 
     public UserController(UserService userService) {
         this.userService = userService;
+    }
+
+    @InitBinder
+    private void initBinder(DataBinder binder) {
+        if (binder.getTarget() instanceof User) {
+            binder.setValidator(validator);
+        }
     }
 
     @GetMapping("/")
@@ -35,14 +49,14 @@ public class UserController {
     }
 
     @PostMapping("/user/add")
-    public String addUser(@ModelAttribute("newuser") @Valid User users, Errors errors, SessionStatus status) {
-        if (errors.hasErrors()) {
+    public String addUser(@ModelAttribute @Valid @Va User users, BindingResult result) {
+        if (result.hasErrors()) {
             return "adduser";
+        } else {
+            User user = users;
+            userService.addUser(user);
+            return "redirect:/";
         }
-        User user = users;
-        userService.addUser(user);
-        status.setComplete();
-        return "redirect:/";
     }
 
     @GetMapping("/user/edit")
@@ -53,8 +67,15 @@ public class UserController {
     }
 
     @PostMapping("/user/edit")
-    public String editUser(@RequestParam("userId") String id, @ModelAttribute("edituser") User users) {
-        userService.updateUser(id, users);
+    public String editUser(@ModelAttribute @Valid User users, @RequestParam("userId") String id, Errors errors) {
+        if (errors.hasErrors()) {
+            String s = "dd";
+            return "index";
+
+        } else {
+            String s = "dfsdfg";
+            userService.updateUser(id, users);
+        }
         return "redirect:/";
     }
 

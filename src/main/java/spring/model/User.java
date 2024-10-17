@@ -1,10 +1,12 @@
 package spring.model;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
 import javax.persistence.*;
-import javax.validation.Valid;
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+
 
 @Entity
 @Table(name = "users")
@@ -13,16 +15,20 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Имя не должно быть пустым")
+    @Size(message = "Имя должно включать минимум два символа")
     private String name;
-
+    @NotBlank(message = "Фамилия не должна быть пустой")
+    @Size(message = "Фамилия должна включать минимум два символа")
     private String surname;
-
-    private int age;
+    @NotNull
+    @Min(1)
+    private Integer age;
 
     public User() {
     }
 
-    public User(String name, String surname, int age) {
+    public User(String name, String surname, Integer age) {
         this.name = name;
         this.surname = surname;
         this.age = age;
@@ -56,10 +62,8 @@ public class User {
         return age;
     }
 
-    public void setAge(int age) {
-        if (age > 0) {
-            this.age = age;
-        }
+    public void setAge(Integer age) {
+           this.age = age;
     }
 
     @Override

@@ -12,10 +12,13 @@
   <input type="text" disabled = "true" name="id" th:field="*{id}">
   <label>Имя пользователя</label>
   <input type="text" name="name" th:field="*{name}">
+  <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Имя некорректно</span>
   <label>Фамилия пользователя</label>
   <input type="text" name="surname" th:field="*{surname}">
+  <span th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Фамилия некорректна</span>
   <label>Возраст</label>
   <input type="text" name="age" th:field="*{age}">
+  <span th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Возраст некорректен</span>
   <button type="submit">Сохранить</button>
 </form>
 </body>
