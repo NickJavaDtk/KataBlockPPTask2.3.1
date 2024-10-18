@@ -1,13 +1,10 @@
 package web.config;
 
-import org.hibernate.validator.HibernateValidator;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.validation.Validator;
-import org.springframework.validation.beanvalidation.BeanValidationPostProcessor;
-import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
@@ -16,7 +13,7 @@ import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 
-import javax.servlet.FilterRegistration;
+
 
 @Configuration
 @EnableWebMvc
@@ -55,17 +52,6 @@ public class WebConfig implements WebMvcConfigurer {
         filter.setForceEncoding(true);
         return filter;
     }
-
-    @Bean
-    public LocalValidatorFactoryBean factoryBean() {
-        LocalValidatorFactoryBean factoryBean = new LocalValidatorFactoryBean();
-        BeanValidationPostProcessor bee = new BeanValidationPostProcessor();
-        Validator validator = new
-        bee.setValidator(validator);
-        factoryBean.setValidationProviderResolver(validator);
-        return factoryBean;
-    }
-
 
     @Override
     public void configureViewResolvers(ViewResolverRegistry registry) {

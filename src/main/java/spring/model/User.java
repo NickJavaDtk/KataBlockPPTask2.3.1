@@ -1,11 +1,11 @@
 package spring.model;
 
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 
 @Entity
@@ -16,13 +16,12 @@ public class User {
     private Long id;
 
     @NotBlank(message = "Имя не должно быть пустым")
-    @Size(message = "Имя должно включать минимум два символа")
+    @Size(min = 2, message = "Имя должно включать минимум два символа")
     private String name;
     @NotBlank(message = "Фамилия не должна быть пустой")
-    @Size(message = "Фамилия должна включать минимум два символа")
+    @Size(min = 2, message = "Фамилия должна включать минимум два символа")
     private String surname;
-    @NotNull
-    @Min(1)
+    @Min(value = 0, message = "возраст не может быть меньше 0")
     private Integer age;
 
     public User() {
